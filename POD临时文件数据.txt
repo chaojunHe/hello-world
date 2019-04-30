@@ -1,0 +1,32 @@
+登录账户：10002
+
+登录密码：453351680
+
+登录工单：81st18121701
+
+批次编号：zj18121801
+zj181202
+正极浆料批次：181217zjzp0100001
+
+
+ZJ181218001
+zj181218008
+
+81ST18121801
+
+
+
+
+            // 检查工站是否存在
+            let tempIsExist = false
+            for (let i = 0; i < dsProcess.length; i++) {
+              if (dsProcess[i]['process_code'].toUpperCase() === this.sCode.toUpperCase()) {
+                tempIsExist = true
+                break
+              }
+            }
+            // 工站不存
+            if (!tempIsExist) {
+              this.isChecking = false
+              return void this.$message.error({ message: this.ngPara.station + ' 工站未过站，不能录入不良', center: true, duration: 5000 })
+            }
