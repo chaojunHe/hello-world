@@ -1,0 +1,28 @@
+(?:\s+)?(?:(join|from|insert|update|delete))\s+([\w\[\]]*\.?[\w\[\]]*\.?\[?(\b\w+)\]?)[\r\n\s\)]+([\w\[\]]*\.?[\w\[\]]*\.?\[?(\b\w+)\]?)[\r\n\s\)]+(where|left|join|inner)?
+
+检测语句：
+插入：insert into table1(field1,field2) values(value1,value2)
+删除：delete from table1 where 范围
+更新：update table1 set field1=value1 where 范围
+查找：select * from table1 where field1 like ’%value1%’ ---like的语法很精妙，查资料!
+排序：select * from table1 order by field1,field2 [desc]
+总数：select count as totalcount from table1
+求和：select sum(field1) as sumvalue from table1
+平均：select avg(field1) as avgvalue from table1
+最大：select max(field1) as maxvalue from table1
+最小：select min(field1) as minvalue from table1
+
+SELECT     TOP (100) PERCENT B.main_order, D.group_code, D.group_name, C.process_code, C.process_name, CONVERT(decimal(18, 0), SUM(A.qty)) AS qty, MIN(A.input_time) AS InputDateTime, 
+                      MAX(A.start_time) AS StartDateTime, B.order_no
+FROM         (SELECT     id, order_no, SFC, qty, fail_times, group_code, process_code AS old_process_code, (CASE process_code WHEN 'END' THEN
+                                                  (SELECT     TOP 1 from_process
+                                                    FROM          P_SFC_State
+                                                    WHERE      P_SFC_State.SFC = P_SFC_Process_IOLog.SFC) ELSE process_code END) AS process_code, station_code, input_time, output_time, p_date, pass, emp_code, class_code, 
+                                              workshop, start_time, initqty
+                       FROM          dbo.P_SFC_Process_IOLog) AS A INNER JOIN
+                      dbo.P_WorkOrder AS B ON A.order_no = B.order_no INNER JOIN
+                      dbo.B_ProcessList AS C ON A.process_code = C.process_code INNER JOIN
+                      dbo.B_WorkGroup AS D ON C.group_code = D.group_code
+WHERE     (A.pass = 1)
+GROUP BY B.main_order, D.group_code, D.group_name, C.process_name, D.idx, C.idx, C.process_code, B.order_no
+ORDER BY D.idx, C.idx
