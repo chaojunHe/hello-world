@@ -26,3 +26,7 @@ FROM         (SELECT     id, order_no, SFC, qty, fail_times, group_code, process
 WHERE     (A.pass = 1)
 GROUP BY B.main_order, D.group_code, D.group_name, C.process_name, D.idx, C.idx, C.process_code, B.order_no
 ORDER BY D.idx, C.idx
+
+
+Me: Are you ok?
+Fr: I fine.
