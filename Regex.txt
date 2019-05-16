@@ -30,3 +30,4 @@ ORDER BY D.idx, C.idx
 
 Me: Are you ok?
 Fr: I fine.
+Co: Yes, I was here. you can find me now.
