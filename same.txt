@@ -18,3 +18,6 @@ dev1
 
 
 I Juse want to try.
+
+----------------------------
+Some wrong here. just  -> just
